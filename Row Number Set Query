@@ -1,0 +1,15 @@
+SET @ROW1=0, @ROW2=0, @ROW3=0, @ROW4=0;
+SELECT MIN(Doctor), MIN(Professor), MIN(Singer), MIN(Actor)
+FROM(SELECT
+        CASE WHEN OCCUPATION='Doctor' THEN (@ROW1:=@ROW1+1)
+             WHEN OCCUPATION='Professor' THEN (@ROW2:=@ROW2+1)
+             WHEN OCCUPATION='Singer' THEN (@ROW3:=@ROW3+1)
+             WHEN OCCUPATION='Actor' THEN (@ROW4:=@ROW4+1) END AS RowNumber,
+        CASE WHEN OCCUPATION='Doctor' THEN NAME END AS Doctor,
+        CASE WHEN OCCUPATION='Professor' THEN NAME END AS Professor,
+        CASE WHEN OCCUPATION='Singer' THEN NAME END AS Singer,
+        CASE WHEN OCCUPATION='Actor' THEN NAME END AS Actor
+  FROM OCCUPATIONS
+  ORDER BY NAME
+) O
+GROUP BY RowNumber
